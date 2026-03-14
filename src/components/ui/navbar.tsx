@@ -87,12 +87,12 @@ export function Navbar() {
             transition={{ type: "spring", stiffness: 300 }}
           />
           <motion.span
-            style={{ fontFamily: "var(--font-nunito)" }}
-            className="text-lg font-black lowercase tracking-tight text-foreground"
-            whileHover={{ letterSpacing: "0.05em" }}
+            style={{ fontFamily: "var(--font-share-tech-mono)" }}
+            className="text-sm uppercase tracking-[0.2em] text-foreground"
+            whileHover={{ letterSpacing: "0.3em" }}
             transition={{ duration: 0.2 }}
           >
-            nouzen.
+            NOUZEN.
           </motion.span>
         </a>
 

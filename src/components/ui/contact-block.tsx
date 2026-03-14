@@ -1,0 +1,57 @@
+"use client"
+
+import { motion } from "framer-motion";
+import { Github, Linkedin, Mail } from "lucide-react";
+import { Button } from "@/components/ui/button";
+
+export function ContactBlock() {
+  return (
+    <section id="contact" className="relative flex items-center justify-center min-h-screen w-full bg-background overflow-hidden">
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-size-[24px_24px]" />
+      <div className="absolute top-0 left-0 w-24 h-24 bg-primary/10" style={{ clipPath: "polygon(0 0, 100% 0, 0 100%)" }} />
+      <div className="relative z-10 w-full max-w-3xl px-6 text-center">
+        <motion.p initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} transition={{ duration: 0.6 }} viewport={{ once: true }} className="mb-2 text-xs uppercase tracking-[0.4em] text-primary" style={{ fontFamily: "var(--font-share-tech-mono)" }}>
+          // OPEN CHANNEL
+        </motion.p>
+        <motion.h2 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }} viewport={{ once: true }} className="mb-6 text-4xl font-bold text-foreground md:text-5xl uppercase tracking-tight">
+          Contact
+        </motion.h2>
+        <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} transition={{ delay: 0.2 }} viewport={{ once: true }} className="mx-auto mb-8 h-px w-24 bg-primary" />
+        <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.3 }} viewport={{ once: true }} className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-12">
+          <a href="mailto:liamfelipe7212005@gmail.com">
+            <Button size="lg" className="gap-2 uppercase tracking-widest text-xs rounded-none border border-primary bg-primary hover:bg-primary/80 w-full sm:w-auto">
+              <Mail className="h-4 w-4" /> Send Message
+            </Button>
+          </a>
+          <a href="https://www.linkedin.com/in/liam-felipe-a79a72365/" target="_blank" rel="noopener noreferrer">
+            <Button size="lg" variant="outline" className="gap-2 uppercase tracking-widest text-xs rounded-none border-primary text-primary hover:bg-primary hover:text-primary-foreground w-full sm:w-auto">
+              <Linkedin className="h-4 w-4" /> LinkedIn
+            </Button>
+          </a>
+          <a href="https://github.com/INouzen" target="_blank" rel="noopener noreferrer">
+            <Button size="lg" variant="outline" className="gap-2 uppercase tracking-widest text-xs rounded-none border-primary text-primary hover:bg-primary hover:text-primary-foreground w-full sm:w-auto">
+              <Github className="h-4 w-4" /> GitHub
+            </Button>
+          </a>
+        </motion.div>
+        <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.4 }} viewport={{ once: true }} className="mx-auto max-w-sm border border-border p-4 grid grid-cols-2 gap-4" style={{ fontFamily: "var(--font-share-tech-mono)" }}>
+          {[
+            { label: "STATUS", value: "AVAILABLE" },
+            { label: "RESPONSE", value: "24-48 HRS" },
+          ].map((stat) => (
+            <div key={stat.label} className="text-center">
+              <p className="text-xs text-muted-foreground uppercase tracking-widest">{stat.label}</p>
+              <p className="text-sm font-bold text-primary flex items-center justify-center gap-1">
+                <span className="h-1.5 w-1.5 rounded-full bg-primary animate-pulse" />
+                {stat.value}
+              </p>
+            </div>
+          ))}
+        </motion.div>
+        <motion.p initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} transition={{ delay: 0.6 }} viewport={{ once: true }} className="mt-8 text-xs text-muted-foreground/30 uppercase tracking-widest italic" style={{ fontFamily: "var(--font-share-tech-mono)" }}>
+          "I want to keep moving forward." — Shinei Nouzen
+        </motion.p>
+      </div>
+    </section>
+  );
+}

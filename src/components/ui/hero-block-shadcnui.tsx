@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
-import { ArrowDown, Github, Linkedin, Mail } from "lucide-react";
+import { ArrowDown, Mail } from "lucide-react";
 import { useEffect, useState } from "react";
 
 const roles = ["Web Developer.", "Game Developer.", "BSIT Student.", "The Undertaker."];
@@ -42,7 +42,7 @@ export function HeroBlock() {
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
           <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ delay: 0.2, type: "spring", stiffness: 200 }} className="mb-8 inline-block">
             <div className="mx-auto h-24 w-24 rounded-full border-2 border-primary overflow-hidden shadow-lg shadow-primary/20">
-            <img src="/me.jpg" alt="Liam Felipe" className="h-full w-full object-cover" />
+              <img src="/me.jpg" alt="Liam Felipe" className="h-full w-full object-cover" />
             </div>
           </motion.div>
 
@@ -67,24 +67,12 @@ export function HeroBlock() {
           </motion.p>
 
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5, duration: 0.6 }} className="mb-12 flex flex-wrap justify-center gap-4">
-            <Button size="lg" className="gap-2 uppercase tracking-widest text-xs rounded-none border border-primary bg-primary hover:bg-primary/80">
+            <Button size="lg" className="gap-2 uppercase tracking-widest text-xs rounded-none border border-primary bg-primary hover:bg-primary/80" onClick={() => document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" })}>
               <Mail className="h-4 w-4" />Get in Touch
             </Button>
             <Button size="lg" variant="outline" className="gap-2 uppercase tracking-widest text-xs rounded-none border-primary text-primary hover:bg-primary hover:text-primary-foreground" onClick={() => document.getElementById("projects")?.scrollIntoView({ behavior: "smooth" })}>
               View Projects<ArrowDown className="h-4 w-4" />
             </Button>
-          </motion.div>
-
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.6, duration: 0.6 }} className="flex justify-center gap-4">
-            {[
-              { icon: Github, href: "https://github.com/INouzen" },
-              { icon: Linkedin, href: "https://www.linkedin.com/in/liam-felipe-a79a72365/" },
-              { icon: Mail, href: "mailto:liamfelipe7212005@gmail.com" },
-            ].map((social, index) => (
-              <motion.a key={index} href={social.href} whileHover={{ scale: 1.1, y: -2 }} whileTap={{ scale: 0.95 }} className="flex h-12 w-12 items-center justify-center border border-primary text-primary transition-colors hover:bg-primary hover:text-primary-foreground">
-                <social.icon className="h-5 w-5" />
-              </motion.a>
-            ))}
           </motion.div>
         </motion.div>
       </div>
