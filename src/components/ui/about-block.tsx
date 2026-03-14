@@ -6,31 +6,38 @@ export function AboutBlock() {
   return (
     <section id="about" className="relative flex items-center justify-center min-h-screen w-full bg-background overflow-hidden">
       <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-size-[24px_24px]" />
+      <div className="absolute top-0 right-0 w-24 h-24 bg-primary/10" style={{ clipPath: "polygon(100% 0, 100% 100%, 0 0)" }} />
 
       <div className="relative z-10 w-full max-w-3xl px-6 text-center">
-        <motion.h2
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          viewport={{ once: true }}
-          className="mb-8 text-4xl font-bold text-foreground md:text-5xl"
-        >
+        <motion.p initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} transition={{ duration: 0.6 }} viewport={{ once: true }} className="mb-2 text-xs uppercase tracking-[0.4em] text-primary" style={{ fontFamily: "var(--font-share-tech-mono)" }}>
+          // PERSONNEL FILE
+        </motion.p>
+        <motion.h2 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }} viewport={{ once: true }} className="mb-6 text-4xl font-bold text-foreground md:text-5xl uppercase tracking-tight">
           About Me
         </motion.h2>
-
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          viewport={{ once: true }}
-          className="text-lg text-muted-foreground md:text-xl leading-relaxed"
-        >
-          My name is Liam Felipe, a 20-year-old Information Technology student at AMA Computer College Fairview. 
-          I am passionate about technology and am actively pursuing knowledge in both web application development 
-          and game development, with the goal of building a career in either field. Outside of academics, 
-          I enjoy assembling Gunpla and model kits, which has strengthened my attention to detail and patience. 
-          I am driven to complete my studies and establish myself in a professional environment where I can 
+        <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} transition={{ delay: 0.2 }} viewport={{ once: true }} className="mx-auto mb-8 h-px w-24 bg-primary" />
+        <motion.p initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.2 }} viewport={{ once: true }} className="text-base text-muted-foreground leading-relaxed tracking-wide mb-8">
+          My name is Liam Felipe, a 20-year-old Information Technology student at AMA Computer College Fairview.
+          I am passionate about technology and am actively pursuing knowledge in both web application development
+          and game development, with the goal of building a career in either field. Outside of academics,
+          I enjoy assembling Gunpla and model kits, which has strengthened my attention to detail and patience.
+          I am driven to complete my studies and establish myself in a professional environment where I can
           continuously grow and contribute meaningfully to the field of technology.
+        </motion.p>
+        <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.4 }} viewport={{ once: true }} className="grid grid-cols-3 gap-4 border border-border p-4" style={{ fontFamily: "var(--font-share-tech-mono)" }}>
+          {[
+            { label: "STATUS", value: "ACTIVE" },
+            { label: "YEAR", value: "2ND" },
+            { label: "TRACK", value: "WEB + GAME" },
+          ].map((stat) => (
+            <div key={stat.label} className="text-center">
+              <p className="text-xs text-muted-foreground uppercase tracking-widest">{stat.label}</p>
+              <p className="text-lg font-bold text-primary">{stat.value}</p>
+            </div>
+          ))}
+        </motion.div>
+        <motion.p initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} transition={{ delay: 0.6 }} viewport={{ once: true }} className="mt-8 text-xs text-muted-foreground/50 uppercase tracking-widest italic" style={{ fontFamily: "var(--font-share-tech-mono)" }}>
+          "Even so, I will keep moving forward." — Shinei Nouzen
         </motion.p>
       </div>
     </section>
