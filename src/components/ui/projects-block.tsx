@@ -21,7 +21,7 @@ const projects = [
     type: "image",
   },
   {
-    title: "Project Three",
+    title: "Blender 3D Modeling",
     media: "/project3.png",
     type: "image",
   },
