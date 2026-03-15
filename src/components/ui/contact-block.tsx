@@ -8,7 +8,6 @@ export function ContactBlock() {
   return (
     <section id="contact" className="relative flex items-center justify-center min-h-screen w-full bg-background overflow-hidden">
       <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-size-[24px_24px]" />
-      <div className="absolute top-0 left-0 w-24 h-24 bg-primary/10" style={{ clipPath: "polygon(0 0, 100% 0, 0 100%)" }} />
       <div className="relative z-10 w-full max-w-3xl px-6 text-center">
         <motion.p initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} transition={{ duration: 0.6 }} viewport={{ once: true }} className="mb-2 text-xs uppercase tracking-[0.4em] text-primary" style={{ fontFamily: "var(--font-share-tech-mono)" }}>
           // OPEN CHANNEL

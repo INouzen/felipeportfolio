@@ -149,7 +149,7 @@ export function ProjectsBlock() {
           ))}
         </motion.div>
 
-        <motion.p initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} transition={{ delay: 0.5 }} viewport={{ once: true }} className="mt-8 text-xs text-muted-foreground/30 uppercase tracking-widest italic" style={{ fontFamily: "var(--font-share-tech-mono)" }}>
+        <motion.p initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} transition={{ delay: 0.5 }} viewport={{ once: true }} className="mt-8 text-xs text-muted-foreground/70 uppercase tracking-widest italic" style={{ fontFamily: "var(--font-share-tech-mono)" }}>
           "We are not tools of the government, or anyone else." — Shinei Nouzen
         </motion.p>
       </div>

@@ -6,6 +6,7 @@ import { ThemeProvider } from "@/components/theme-provider";
 import { EightySixCursor } from "@/components/ui/cursor";
 import { LenaChat } from "@/components/ui/lena-chat";
 import { LilyParticlesWrapper } from "@/components/ui/lily-particles-wrapper";
+import { Reginleif } from "@/components/ui/reginleif";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",

@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 import { ArrowDown, Mail } from "lucide-react";
 import { useEffect, useState } from "react";
+import { Reginleif } from "@/components/ui/reginleif";
 
 const roles = ["Web Developer.", "Game Developer.", "BSIT Student.", "The Undertaker."];
 
@@ -31,8 +32,8 @@ export function HeroBlock() {
   return (
     <section className="relative flex items-center justify-center overflow-hidden bg-background min-h-screen w-full">
       <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-size-[24px_24px]" />
-      <div className="absolute top-0 left-0 w-32 h-32 bg-primary/10" style={{ clipPath: "polygon(0 0, 100% 0, 0 100%)" }} />
-      <div className="absolute bottom-0 right-0 w-32 h-32 bg-primary/10" style={{ clipPath: "polygon(100% 0, 100% 100%, 0 100%)" }} />
+
+      <Reginleif />
 
       <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.2 }} className="absolute top-24 left-8 text-xs text-primary uppercase tracking-[0.3em] border-l-2 border-primary pl-3" style={{ fontFamily: "var(--font-share-tech-mono)" }}>
         UNIT: SPEARHEAD // NOUZEN, L.F
@@ -50,7 +51,7 @@ export function HeroBlock() {
             // CALLSIGN: UNDERTAKER
           </motion.p>
 
-          <motion.h1 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3, duration: 0.6 }} className="mb-4 text-5xl font-bold text-foreground md:text-7xl tracking-tight">
+          <motion.h1 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3, duration: 0.6 }} className="mb-4 text-5xl font-bold text-foreground md:text-7xl tracking-tight" style={{ fontFamily: "var(--font-share-tech-mono)" }}>
             Liam Felipe
           </motion.h1>
 
@@ -62,7 +63,7 @@ export function HeroBlock() {
 
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.35 }} className="mx-auto mb-6 h-px w-24 bg-primary" />
 
-          <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4, duration: 0.6 }} className="mx-auto mb-10 max-w-2xl text-base text-muted-foreground tracking-wide">
+          <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4, duration: 0.6 }} className="mx-auto mb-10 max-w-2xl text-base tracking-wide" style={{ color: "oklch(0.78 0 0)" }}>
             2nd Year BSIT Student from AMA Computer College Fairview.
           </motion.p>
 
@@ -78,7 +79,7 @@ export function HeroBlock() {
       </div>
 
       <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.2 }} className="absolute bottom-16 left-1/2 -translate-x-1/2 text-center" style={{ fontFamily: "var(--font-share-tech-mono)" }}>
-        <p className="text-xs text-muted-foreground/50 uppercase tracking-widest italic">"I want to keep moving forward."</p>
+        <p className="text-xs uppercase tracking-widest italic" style={{ color: "oklch(0.65 0 0)" }}>"I want to keep moving forward."</p>
       </motion.div>
 
       <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1, y: [0, 10, 0] }} transition={{ opacity: { delay: 1, duration: 0.6 }, y: { delay: 1.5, duration: 1.5, repeat: Infinity } }} className="absolute bottom-8 left-1/2 -translate-x-1/2 transform">
