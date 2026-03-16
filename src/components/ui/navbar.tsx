@@ -92,7 +92,7 @@ export function Navbar() {
             whileHover={{ letterSpacing: "0.3em" }}
             transition={{ duration: 0.2 }}
           >
-            NOUZEN.
+            NOUZEN
           </motion.span>
         </a>
 

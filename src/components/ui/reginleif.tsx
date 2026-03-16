@@ -4,17 +4,18 @@ import { useEffect, useRef } from "react";
 
 export function Reginleif() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const killedRef = useRef(false);
 
   useEffect(() => {
+    killedRef.current = false;
     const canvas = canvasRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
-    canvas.width = canvas.offsetWidth;
-    canvas.height = canvas.offsetHeight;
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
 
-    const GROUND = canvas.height - 60;
     const DRAW_W = 220;
     const DRAW_H = 140;
 
@@ -32,87 +33,57 @@ export function Reginleif() {
       loadImg("/reginleif6.png"),
     ];
 
-    const fireFrames = [
-      loadImg("/reginleif7.png"),
-      loadImg("/reginleif8.png"),
-      loadImg("/reginleif9.png"),
-      loadImg("/reginleif10.png"),
-      loadImg("/reginleif10.png"),
-      loadImg("/reginleif9.png"),
-      loadImg("/reginleif8.png"),
-      loadImg("/reginleif7.png"),
-    ];
-
     const deployFrames = [
       loadImg("/reginleif11.png"),
-      loadImg("/reginleif11.png"),
-      loadImg("/reginleif12.png"),
       loadImg("/reginleif12.png"),
       loadImg("/reginleif13.png"),
-      loadImg("/reginleif13.png"),
-      loadImg("/reginleif14.png"),
       loadImg("/reginleif14.png"),
     ];
 
-    const damageFrames = [
-      loadImg("/reginleif16.png"),
-      loadImg("/reginleif16.png"),
-      loadImg("/reginleif17.png"),
-      loadImg("/reginleif17.png"),
-      loadImg("/reginleif17.png"),
-      loadImg("/reginleif18.png"),
-      loadImg("/reginleif18.png"),
-      loadImg("/reginleif19.png"),
-      loadImg("/reginleif19.png"),
-      loadImg("/reginleif18.png"),
-      loadImg("/reginleif17.png"),
-      loadImg("/reginleif16.png"),
-    ];
+    type State = "hidden" | "deploy" | "rise" | "crawl";
 
-    type State = "deploy" | "crawl" | "fire" | "damage" | "idle";
+    const FRAME_SPEEDS: Record<State, number> = {
+      hidden: 0,
+      deploy: 8,
+      rise: 0,
+      crawl: 7,
+    };
 
-    let state: State = "deploy";
+    const getContactSection = () => document.querySelector<HTMLElement>("#contact");
+
+    const getGroundY = (): number => {
+      const el = getContactSection();
+      if (!el) return window.innerHeight - 60;
+      const rect = el.getBoundingClientRect();
+      return Math.min(rect.bottom, window.innerHeight) - DRAW_H * 0.1;
+    };
+
+    const isContactVisible = (): boolean => {
+      const el = getContactSection();
+      if (!el) return false;
+      const rect = el.getBoundingClientRect();
+      return rect.top < window.innerHeight && rect.bottom > 0;
+    };
+
+    let state: State = "hidden";
     let frameIndex = 0;
     let frameTimer = 0;
 
-    const FRAME_SPEEDS: Record<State, number> = {
-      deploy: 8,
-      crawl: 7,
-      fire: 5,
-      damage: 6,
-      idle: 12,
-    };
-
-    const targetY = GROUND - DRAW_H;
-
+    // Movement state
     let reg = {
-      x: canvas.width / 2 - DRAW_W / 2,
-      y: canvas.height + DRAW_H * 3,
+      x: -DRAW_W,
+      y: window.innerHeight + DRAW_H * 4,
       vx: 1.4,
-      dir: 1 as 1 | -1,
+      dir: 1 as 1 | -1, // 1 = right, -1 = left
     };
 
     let fc = 0;
-    let fireCD = 280;
-    let damageCD = 600;
-    let idleCD = 450;
-    let muzzleFlash = 0;
 
     const resize = () => {
-      canvas.width = canvas.offsetWidth;
-      canvas.height = canvas.offsetHeight;
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
     };
     window.addEventListener("resize", resize);
-
-    const getCurrentFrames = () => {
-      switch (state) {
-        case "crawl": return crawlFrames;
-        case "fire": return fireFrames;
-        case "deploy": return deployFrames;
-        case "damage": return damageFrames;
-        case "idle": return [crawlFrames[0]];
-      }
-    };
 
     const setState = (newState: State) => {
       if (state === newState) return;
@@ -122,142 +93,123 @@ export function Reginleif() {
     };
 
     const drawFrame = (img: HTMLImageElement, x: number, y: number, flipX: boolean) => {
-      if (!img.complete || img.naturalWidth === 0) return;
-      const iw = img.naturalWidth;
-      const ih = img.naturalHeight;
-      const scale = Math.min(DRAW_W / iw, DRAW_H / ih);
-      const dw = iw * scale;
-      const dh = ih * scale;
+      if (!img || !img.complete || img.naturalWidth === 0) return;
+      const scale = Math.min(DRAW_W / img.naturalWidth, DRAW_H / img.naturalHeight);
+      const dw = img.naturalWidth * scale;
+      const dh = img.naturalHeight * scale;
       const dx = x + (DRAW_W - dw) / 2;
       const dy = y + (DRAW_H - dh);
+      
       ctx.save();
       if (flipX) {
+        // Translate to the center of the sprite, flip, then translate back
+        ctx.translate(dx + dw / 2, 0);
         ctx.scale(-1, 1);
-        ctx.drawImage(img, -(dx + dw), dy, dw, dh);
+        ctx.drawImage(img, -dw / 2, dy, dw, dh);
       } else {
         ctx.drawImage(img, dx, dy, dw, dh);
       }
       ctx.restore();
     };
 
+    let rafId: number;
+
     const animate = () => {
+      if (killedRef.current) return;
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       fc++;
 
-      const frames = getCurrentFrames();
-      const speed = FRAME_SPEEDS[state];
+      if (state === "hidden") {
+        if (isContactVisible()) {
+          reg.x = -DRAW_W;
+          reg.dir = 1;
+          reg.vx = Math.abs(reg.vx);
+          reg.y = getGroundY() + DRAW_H * 4;
+          setState("deploy");
+        }
+        rafId = requestAnimationFrame(animate);
+        return;
+      }
+
+      const groundY = getGroundY();
+      const targetY = groundY - DRAW_H;
 
       if (state === "deploy") {
+        frameTimer++;
+        if (frameTimer >= FRAME_SPEEDS.deploy) {
+          frameTimer = 0;
+          frameIndex++;
+          if (frameIndex >= deployFrames.length) setState("rise");
+        }
+        rafId = requestAnimationFrame(animate);
+        return;
+      }
+
+      if (state === "rise") {
         if (reg.y > targetY) {
           reg.y -= 2.5;
         } else {
           reg.y = targetY;
-          frameTimer++;
-          if (frameTimer >= speed) {
-            frameTimer = 0;
-            frameIndex++;
-            if (frameIndex >= frames.length) {
-              setState("crawl");
-            }
-          }
+          setState("crawl");
         }
-      } else {
-        frameTimer++;
-        if (frameTimer >= speed) {
-          frameTimer = 0;
-          frameIndex++;
-          if (frameIndex >= frames.length) {
-            if (state === "fire") { setState("crawl"); muzzleFlash = 0; }
-            else if (state === "damage") setState("crawl");
-            else if (state === "idle") setState("crawl");
-            else frameIndex = 0;
-          }
-        }
+        drawFrame(deployFrames[deployFrames.length - 1], reg.x, reg.y, reg.dir < 0);
+        rafId = requestAnimationFrame(animate);
+        return;
       }
 
-      if (state === "crawl") {
-        reg.x += reg.vx;
-        if (reg.x > canvas.width + DRAW_W) reg.x = -DRAW_W;
-        if (reg.x < -DRAW_W * 2) reg.x = canvas.width + DRAW_W;
-
-        fireCD--;
-        if (fireCD <= 0) {
-          setState("fire");
-          muzzleFlash = 12;
-          fireCD = 280 + Math.floor(Math.random() * 120);
-        }
-
-        damageCD--;
-        if (damageCD <= 0) {
-          setState("damage");
-          damageCD = 600 + Math.floor(Math.random() * 300);
-        }
-
-        idleCD--;
-        if (idleCD <= 0) {
-          setState("idle");
-          idleCD = 450 + Math.floor(Math.random() * 200);
-        }
+      // ── CRAWL LOGIC ──
+      reg.y = targetY;
+      frameTimer++;
+      if (frameTimer >= FRAME_SPEEDS.crawl) {
+        frameTimer = 0;
+        frameIndex++;
+        if (frameIndex >= crawlFrames.length) frameIndex = 0;
       }
 
-      if (muzzleFlash > 0) {
-        muzzleFlash--;
-        if (state === "fire" && frameIndex >= 2) {
-          const fx = reg.dir > 0 ? reg.x + DRAW_W + 5 : reg.x - 20;
-          const fy = reg.y + 30;
-          ctx.save();
-          ctx.globalAlpha = muzzleFlash / 12;
-          ctx.fillStyle = "#ff8800";
-          ctx.beginPath();
-          ctx.arc(fx, fy, 16, 0, Math.PI * 2);
-          ctx.fill();
-          ctx.fillStyle = "#ffff88";
-          ctx.beginPath();
-          ctx.arc(fx, fy, 8, 0, Math.PI * 2);
-          ctx.fill();
-          ctx.restore();
-        }
+      reg.x += reg.vx;
+
+      // ── FLIP AT EDGES ──
+      // If going right and hit right edge
+      if (reg.vx > 0 && reg.x > canvas.width) {
+        reg.vx *= -1;
+        reg.dir = -1;
+      } 
+      // If going left and hit left edge
+      else if (reg.vx < 0 && reg.x < -DRAW_W) {
+        reg.vx *= -1;
+        reg.dir = 1;
       }
 
-      const currentFrame = frames[Math.min(frameIndex, frames.length - 1)];
+      if (!isContactVisible()) {
+        setState("hidden");
+        rafId = requestAnimationFrame(animate);
+        return;
+      }
 
-      if (state === "crawl") {
+      const currentFrame = crawlFrames[Math.min(frameIndex, crawlFrames.length - 1)];
+      if (currentFrame) {
         ctx.save();
         const tilt = Math.sin(fc * 0.08) * 0.025;
         ctx.translate(reg.x + DRAW_W / 2, reg.y + DRAW_H / 2);
         ctx.rotate(tilt);
         ctx.translate(-(reg.x + DRAW_W / 2), -(reg.y + DRAW_H / 2));
+        
+        // dir < 0 means we are moving left, so we flip the sprite
         drawFrame(currentFrame, reg.x, reg.y, reg.dir < 0);
-        ctx.restore();
-      } else if (state === "damage") {
-        ctx.save();
-        ctx.translate((Math.random() - 0.5) * 6, (Math.random() - 0.5) * 4);
-        drawFrame(currentFrame, reg.x, reg.y, reg.dir < 0);
-        ctx.restore();
-      } else {
-        drawFrame(currentFrame, reg.x, reg.y, reg.dir < 0);
-      }
-
-      if (state === "damage" && fc % 3 === 0) {
-        ctx.save();
-        ctx.globalAlpha = 0.25 + Math.random() * 0.25;
-        ctx.fillStyle = "#888888";
-        ctx.beginPath();
-        ctx.arc(
-          reg.x + DRAW_W * 0.45 + (Math.random() - 0.5) * 20,
-          reg.y + DRAW_H * 0.3 + (Math.random() - 0.5) * 10,
-          5 + Math.random() * 7, 0, Math.PI * 2
-        );
-        ctx.fill();
         ctx.restore();
       }
 
-      requestAnimationFrame(animate);
+      rafId = requestAnimationFrame(animate);
     };
 
     animate();
-    return () => window.removeEventListener("resize", resize);
+
+    return () => {
+      killedRef.current = true;
+      cancelAnimationFrame(rafId);
+      window.removeEventListener("resize", resize);
+    };
   }, []);
 
-  return <canvas ref={canvasRef} className="pointer-events-none absolute inset-0 z-1 w-full h-full" />;
+  return <canvas ref={canvasRef} className="pointer-events-none fixed inset-0 z-1 w-full h-full" />;
 }

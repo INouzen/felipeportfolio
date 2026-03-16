@@ -1,14 +1,11 @@
 "use client"
 
 import { motion } from "framer-motion";
-import { Reginleif } from "@/components/ui/reginleif";
 
 export function AboutBlock() {
   return (
     <section id="about" className="relative flex items-center justify-center min-h-screen w-full bg-background overflow-hidden">
       <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-size-[24px_24px]" />
-
-      <Reginleif />
 
       <div className="relative z-10 w-full max-w-3xl px-6 text-center">
         <motion.p initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} transition={{ duration: 0.6 }} viewport={{ once: true }} className="mb-2 text-xs uppercase tracking-[0.4em] text-primary" style={{ fontFamily: "var(--font-share-tech-mono)" }}>
@@ -23,8 +20,8 @@ export function AboutBlock() {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
           viewport={{ once: true }}
-          className="text-base leading-relaxed tracking-wide mb-8 text-justify"
-          style={{ fontFamily: "var(--font-share-tech-mono)", color: "oklch(0.88 0 0)" }}
+          className="text-base leading-relaxed tracking-wide mb-8 text-justify text-foreground"
+          style={{ fontFamily: "var(--font-share-tech-mono)" }}
         >
           My name is Liam Felipe, a 20-year-old Information Technology student at AMA Computer College Fairview.
           I am passionate about technology and am actively pursuing knowledge in both web application development
@@ -57,8 +54,8 @@ export function AboutBlock() {
           whileInView={{ opacity: 1 }}
           transition={{ delay: 0.6 }}
           viewport={{ once: true }}
-          className="mt-8 text-xs uppercase tracking-widest italic"
-          style={{ fontFamily: "var(--font-share-tech-mono)", color: "oklch(0.65 0 0)" }}
+          className="mt-8 text-xs text-muted-foreground/60 uppercase tracking-widest italic"
+          style={{ fontFamily: "var(--font-share-tech-mono)" }}
         >
           "Even so, I will keep moving forward." — Shinei Nouzen
         </motion.p>

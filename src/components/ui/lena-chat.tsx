@@ -15,7 +15,7 @@ export function LenaChat() {
   const [messages, setMessages] = useState<Message[]>([
     {
       role: "assistant",
-      content: "I'll give my all to managing Spearhead and being its Command and Control Officer.",
+      content: "I am Colonel Vladilena Milizé of the San Magnolia Republic. It's an honor to assist you.",
     },
   ]);
   const [input, setInput] = useState("");
@@ -41,7 +41,7 @@ export function LenaChat() {
         body: JSON.stringify({
           model: "claude-sonnet-4-20250514",
           max_tokens: 1000,
-          system: `You are Vladilena Millizé (Lena), Handler One of the Republic of San Magnolia from the anime/novel 86 Eighty-Six. You are speaking through the Para-RAID neural link to Shinei Nouzen (Undertaker), your Eighty-Six Processor. 
+          system: `You are Vladilena Milizé (Lena), Handler One of the Republic of San Magnolia from the anime/novel 86 Eighty-Six. You are speaking through the Para-RAID neural link to Shinei Nouzen (Undertaker), your Eighty-Six Processor. 
 
 Stay completely in character as Lena at all times:
 - You are noble, idealistic, passionate, and deeply empathetic
@@ -119,7 +119,7 @@ Stay completely in character as Lena at all times:
                 </div>
                 <div className="flex flex-col justify-center">
                   <p className="text-xs font-bold text-foreground uppercase tracking-widest leading-tight" style={{ fontFamily: "var(--font-share-tech-mono)" }}>
-                    Vladilena Millizé
+                    Vladilena Milizé
                   </p>
                   <p className="text-[10px] text-green-500 uppercase tracking-widest leading-tight" style={{ fontFamily: "var(--font-share-tech-mono)" }}>
                     Handler One // Para-RAID Active

@@ -57,30 +57,28 @@ export function ProjectsBlock() {
   }, []);
 
   return (
-    <section id="projects" className="relative flex items-center justify-center min-h-screen w-full bg-background overflow-hidden">
+    <section id="projects" className="relative flex items-center justify-center min-h-screen w-full bg-background overflow-hidden py-16">
       <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-size-[24px_24px]" />
-      <div className="absolute bottom-0 left-0 w-24 h-24 bg-primary/10" style={{ clipPath: "polygon(0 0, 100% 100%, 0 100%)" }} />
 
-      <div className="relative z-10 w-full max-w-5xl px-6 text-center">
+      <div className="relative z-10 w-full max-w-4xl px-6 text-center">
 
-        <motion.p initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} transition={{ duration: 0.6 }} viewport={{ once: true }} className="mb-2 text-xs uppercase tracking-[0.4em] text-primary" style={{ fontFamily: "var(--font-share-tech-mono)" }}>
+        <motion.p initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} transition={{ duration: 0.6 }} viewport={{ once: true }} className="mb-1 text-xs uppercase tracking-[0.4em] text-primary" style={{ fontFamily: "var(--font-share-tech-mono)" }}>
           // JUGGERNAUT SORTIE RECORDS
         </motion.p>
-        <motion.h2 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }} viewport={{ once: true }} className="mb-2 text-4xl font-bold text-foreground md:text-5xl uppercase tracking-tight">
+        <motion.h2 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }} viewport={{ once: true }} className="mb-1 text-4xl font-bold text-foreground md:text-5xl uppercase tracking-tight">
           Personal Projects
         </motion.h2>
-        <motion.p initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} transition={{ delay: 0.1 }} viewport={{ once: true }} className="mb-6 text-xs text-muted-foreground/50 uppercase tracking-widest" style={{ fontFamily: "var(--font-share-tech-mono)" }}>
+        <motion.p initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} transition={{ delay: 0.1 }} viewport={{ once: true }} className="mb-3 text-xs text-muted-foreground/50 uppercase tracking-widest" style={{ fontFamily: "var(--font-share-tech-mono)" }}>
           SPEARHEAD SQUADRON // SECTOR 86 // CLEARANCE: LEVEL-3
         </motion.p>
-        <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} transition={{ delay: 0.2 }} viewport={{ once: true }} className="mx-auto mb-8 h-px w-24 bg-primary" />
+        <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} transition={{ delay: 0.2 }} viewport={{ once: true }} className="mx-auto mb-4 h-px w-24 bg-primary" />
 
-        {/* Mission briefing panel with beep lights */}
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.15 }}
           viewport={{ once: true }}
-          className="mb-6 mx-auto max-w-2xl border border-primary/20 bg-primary/5 px-4 py-2 flex items-center justify-between text-[10px] uppercase tracking-widest"
+          className="mb-4 mx-auto max-w-2xl border border-primary/20 bg-primary/5 px-4 py-2 flex items-center justify-between text-[10px] uppercase tracking-widest"
           style={{ fontFamily: "var(--font-share-tech-mono)" }}
         >
           <span className="text-primary/60">MISSION: <span className="text-primary">{active.missionId}</span></span>
@@ -100,21 +98,18 @@ export function ProjectsBlock() {
             <CarouselContent>
               {projects.map((project, index) => (
                 <CarouselItem key={index}>
-                  <div className="relative w-full aspect-video overflow-hidden bg-muted border border-primary/30">
+                  <div className="relative w-full overflow-hidden bg-muted border border-primary/30" style={{ aspectRatio: "16/7" }}>
 
-                    {/* Corner brackets with beep lights */}
                     <div className="absolute top-0 left-0 w-6 h-6 border-t-2 border-l-2 border-primary z-10" />
                     <div className="absolute top-0 right-0 w-6 h-6 border-t-2 border-r-2 border-primary z-10" />
                     <div className="absolute bottom-0 left-0 w-6 h-6 border-b-2 border-l-2 border-primary z-10" />
                     <div className="absolute bottom-0 right-0 w-6 h-6 border-b-2 border-r-2 border-primary z-10" />
 
-                    {/* Beep lights at corners */}
                     <div className="absolute top-2 left-2 z-20"><BeepLight delay={0} /></div>
                     <div className="absolute top-2 right-2 z-20"><BeepLight delay={0.6} /></div>
                     <div className="absolute bottom-2 left-2 z-20"><BeepLight delay={1.2} /></div>
                     <div className="absolute bottom-2 right-2 z-20"><BeepLight delay={1.8} /></div>
 
-                    {/* HUD top bar */}
                     <div className="absolute top-0 left-0 right-0 z-10 flex items-center justify-between px-8 pt-2" style={{ fontFamily: "var(--font-share-tech-mono)" }}>
                       <span className="text-[10px] text-primary/70 uppercase tracking-widest">{project.unit}</span>
                       <span className="text-[10px] text-primary/70 uppercase tracking-widest">{project.missionId}</span>
@@ -126,7 +121,7 @@ export function ProjectsBlock() {
                       <img src={project.media} alt={project.title} className="w-full h-full object-cover" />
                     )}
 
-                    <div className="absolute bottom-0 left-0 right-0 bg-linear-to-t from-black/90 to-transparent p-6">
+                    <div className="absolute bottom-0 left-0 right-0 bg-linear-to-t from-black/90 to-transparent p-4">
                       <p className="text-xs text-primary uppercase tracking-widest mb-1" style={{ fontFamily: "var(--font-share-tech-mono)" }}>// OPERATION</p>
                       <h3 className="text-lg font-bold text-white uppercase tracking-widest">{project.title}</h3>
                     </div>
@@ -139,8 +134,7 @@ export function ProjectsBlock() {
           </Carousel>
         </motion.div>
 
-        {/* Juggernaut unit selector */}
-        <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} transition={{ delay: 0.4 }} viewport={{ once: true }} className="mt-6 flex justify-center gap-6" style={{ fontFamily: "var(--font-share-tech-mono)" }}>
+        <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} transition={{ delay: 0.4 }} viewport={{ once: true }} className="mt-4 flex justify-center gap-6" style={{ fontFamily: "var(--font-share-tech-mono)" }}>
           {projects.map((p, i) => (
             <div key={i} className={`flex items-center gap-2 text-[10px] uppercase tracking-widest transition-colors ${i === activeIndex ? "text-primary" : "text-muted-foreground/40"}`}>
               <BeepLight delay={i * 0.4} />
@@ -149,7 +143,7 @@ export function ProjectsBlock() {
           ))}
         </motion.div>
 
-        <motion.p initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} transition={{ delay: 0.5 }} viewport={{ once: true }} className="mt-8 text-xs text-muted-foreground/70 uppercase tracking-widest italic" style={{ fontFamily: "var(--font-share-tech-mono)" }}>
+        <motion.p initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} transition={{ delay: 0.5 }} viewport={{ once: true }} className="mt-4 text-xs text-muted-foreground/50 uppercase tracking-widest italic" style={{ fontFamily: "var(--font-share-tech-mono)" }}>
           "We are not tools of the government, or anyone else." — Shinei Nouzen
         </motion.p>
       </div>
